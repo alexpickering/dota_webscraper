@@ -1,5 +1,6 @@
 import scrapy
 
+
 class DotaSpider(scrapy.Spider):
     name = 'heroes'
     start_urls = [
@@ -117,13 +118,18 @@ class DotaSpider(scrapy.Spider):
                     ": " + other_stats_chunk.xpath("tr[6]/td/span/text()").get().strip()
             projectile_speed = other_stats_chunk.xpath("tr[7]/td/text()").get().strip()
             attack_animation = "(Atk Point/Atk Backswing): " + \
-                other_stats_chunk.xpath("tr[8]/td/span[1]/text()").get() + "/" + \
+                other_stats_chunk.xpath("tr[8]/td/span[1]/text()").get() + "+" + \
                 other_stats_chunk.xpath("tr[8]/td/span[2]/text()").get() 
             base_attack_time = other_stats_chunk.xpath("tr[9]/td/text()").get().strip()
             damage_block = other_stats_chunk.xpath("tr[10]/td/text()").get().strip()
             collision_size = other_stats_chunk.xpath("tr[11]/td/text()").get().strip()
             legs = other_stats_chunk.xpath("tr[12]/td/text()").get().strip()
             gib_type = other_stats_chunk.xpath("tr[13]/td/text()").get().strip()
+
+            health_set = DotaSpider.stats_across_levels(health, name='health')
+            health_regen_set = DotaSpider.stats_across_levels(health_regen, name='health_regen')
+
+
 
         yield {
                 'hero': response.meta['hero'],
@@ -134,14 +140,21 @@ class DotaSpider(scrapy.Spider):
                 'agility_growth': agility_growth,
                 'base_intelligence': base_intelligence,
                 'intelligence_growth': intelligence_growth,
+                **health_set,
+                **health_regen_set,
+                # TODO(apick): add other lvl-dependent stats on 129 and below
 
-                'health': health,
-                'health_regen': health_regen,
-                'mana': mana,
-                'mana_regen': mana_regen,
-                'armor': armor,
-                'attacks_per_second': attacks_per_second,
-                'damage': damage,
+                #'health_0': health[0],
+                #'health_1': health[1],
+                #'health_15': health[15],
+                #'health_25': health[25],
+                #'health_30': health[30],
+                #'health_regen': health_regen,
+                #'mana': mana,
+                #'mana_regen': mana_regen,
+                #'armor': armor,
+                #'attacks_per_second': attacks_per_second,
+                #'damage': damage,
 
                 'magic_resistance': magic_resistance,
                 'movement_speed': movement_speed,
@@ -158,3 +171,14 @@ class DotaSpider(scrapy.Spider):
                 'gib_type': gib_type
               }
 
+
+    @staticmethod
+    def stats_across_levels(stat_lookup, name):
+        flat = {}
+
+        for lvl in [0, 1, 15, 25, 30]:
+            key = name + '_' + str(lvl)
+            value = stat_lookup[lvl]
+            flat[key] = value
+
+        return flat
