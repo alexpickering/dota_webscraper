@@ -46,6 +46,8 @@ CREATE TABLE hero (
     attack_speed INTEGER
 );
 
+INSERT INTO hero (name, base_strength) VALUES ("Abbadon", 20);
+
 INSERT INTO hero (
     name, 
     base_strength, 
