@@ -26,6 +26,11 @@ CREATE TABLE hero (
     mana_regen_15 FLOAT,
     mana_regen_25 FLOAT,
     mana_regen_30 FLOAT,
+    armor_0 FLOAT,
+    armor_1 FLOAT,
+    armor_15 FLOAT,
+    armor_25 FLOAT,
+    armor_30 FLOAT,
     attacks_per_second_0 FLOAT,
     attacks_per_second_1 FLOAT,
     attacks_per_second_15 FLOAT,
@@ -43,10 +48,15 @@ CREATE TABLE hero (
     damage_high_30 INTEGER,
     magic_resistance decimal(3,2),
     movement_speed INTEGER,
-    attack_speed INTEGER
+    attack_speed INTEGER,
+    turn_rate FLOAT,
+    vision_range_day INTEGER,
+    vision_range_night INTEGER,
+    attack_range INTEGER,
+    projectile_speed varchar(15),
+    attack_animation_point 
 );
 
-INSERT INTO hero (name, base_strength) VALUES ("Abbadon", 20);
 
 INSERT INTO hero (
     name, 
@@ -56,24 +66,12 @@ INSERT INTO hero (
     damage_high_1, 
     movement_speed
     ) VALUES(
-    "Lone Druid",
-
-
-
-);
-
-INSERT INTO hero (
-    name, 
-    base_strength, 
-    strength_growth, 
-    damage_low_1, 
-    damage_high_1, 
-    movement_speed
-    ) VALUES(
-    "Lone Druid",
-
-
-
+    "Abaddon",
+    23,
+    3,
+    51,
+    61,
+    325
 );
 
 INSERT INTO hero (
@@ -84,8 +82,26 @@ INSERT INTO hero (
     damage_high_1, 
     movement_speed
     ) VALUES(
-    "Lone Druid",
+    "Alchemist",
+    25,
+    2.7,
+    49,
+    58,
+    305
+);
 
-
-
+INSERT INTO hero (
+    name, 
+    base_strength, 
+    strength_growth, 
+    damage_low_1, 
+    damage_high_1, 
+    movement_speed
+    ) VALUES(
+    "Axe",
+    25,
+    3.4,
+    52,
+    56,
+    310
 );
