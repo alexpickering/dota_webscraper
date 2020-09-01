@@ -1,3 +1,14 @@
+DotA 2 Hero Stats Scraper
+-------------------------
+
+This scraper collects information from the DotA 2 hero pages and outputs it in a csv.
+
+
+
+
+SQL Tips
+--------
+
 Create most of your setup in a sql file. I have called it `setup.sql`.
 
 
