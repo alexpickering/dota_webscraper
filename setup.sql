@@ -52,9 +52,16 @@ CREATE TABLE hero (
     turn_rate FLOAT,
     vision_range_day INTEGER,
     vision_range_night INTEGER,
+    attack_type varchar(15),
     attack_range INTEGER,
     projectile_speed varchar(15),
-    attack_animation_point 
+    attack_animation_point FLOAT,
+    attack_animation_backswing FLOAT,
+    base_attack_time FLOAT,
+    damage_block INTEGER,
+    collision_size INTEGER,
+    legs INTEGER,
+    gib_type varchar(15)
 );
 
 
