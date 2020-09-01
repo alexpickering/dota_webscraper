@@ -52,63 +52,63 @@ CREATE TABLE hero (
     turn_rate FLOAT,
     vision_range_day INTEGER,
     vision_range_night INTEGER,
-    attack_type varchar(15),
+    attack_type varchar(7),
     attack_range INTEGER,
-    projectile_speed varchar(15),
+    projectile_speed varchar(8),
     attack_animation_point FLOAT,
     attack_animation_backswing FLOAT,
     base_attack_time FLOAT,
     damage_block INTEGER,
     collision_size INTEGER,
     legs INTEGER,
-    gib_type varchar(15)
+    gib_type varchar(9)
 );
 
 
-INSERT INTO hero (
-    name, 
-    base_strength, 
-    strength_growth, 
-    damage_low_1, 
-    damage_high_1, 
-    movement_speed
-    ) VALUES(
-    "Abaddon",
-    23,
-    3,
-    51,
-    61,
-    325
-);
-
-INSERT INTO hero (
-    name, 
-    base_strength, 
-    strength_growth, 
-    damage_low_1, 
-    damage_high_1, 
-    movement_speed
-    ) VALUES(
-    "Alchemist",
-    25,
-    2.7,
-    49,
-    58,
-    305
-);
-
-INSERT INTO hero (
-    name, 
-    base_strength, 
-    strength_growth, 
-    damage_low_1, 
-    damage_high_1, 
-    movement_speed
-    ) VALUES(
-    "Axe",
-    25,
-    3.4,
-    52,
-    56,
-    310
-);
+--INSERT INTO hero (
+--    name, 
+--    base_strength, 
+--    strength_growth, 
+--    damage_low_1, 
+--    damage_high_1, 
+--    movement_speed
+--    ) VALUES(
+--    "Abaddon",
+--    23,
+--    3,
+--    51,
+--    61,
+--    325
+--);
+--
+--INSERT INTO hero (
+--    name, 
+--    base_strength, 
+--    strength_growth, 
+--    damage_low_1, 
+--    damage_high_1, 
+--    movement_speed
+--    ) VALUES(
+--    "Alchemist",
+--    25,
+--    2.7,
+--    49,
+--    58,
+--    305
+--);
+--
+--INSERT INTO hero (
+--    name, 
+--    base_strength, 
+--    strength_growth, 
+--    damage_low_1, 
+--    damage_high_1, 
+--    movement_speed
+--    ) VALUES(
+--    "Axe",
+--    25,
+--    3.4,
+--    52,
+--    56,
+--    310
+--);

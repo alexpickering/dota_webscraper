@@ -8,8 +8,8 @@ class DotaSpider(scrapy.Spider):
             ]
 
     def parse(self, response):
-        count = 0
-        max   = 3
+        #count = 0
+        #max   = 3
 
         for chunk in response.xpath("//div[contains(@id, 'mw-content-text')]//table/tbody/tr/td//a"):
             print(chunk.get())
@@ -24,17 +24,20 @@ class DotaSpider(scrapy.Spider):
             if href:
                 yield response.follow(href, self.parse_hero, meta=meta)
 
-            count += 1
-            if count >= max:
-                break
+        #    count += 1
+        #    if count >= max:
+        #        break
 
     def parse_hero(self, response):
 
-        for chunk in response.xpath("//table[contains(@class, 'infobox')]/tbody"):
+        print(f"Parsing page for hero: {response.meta['hero']}")
+
+        for chunk in response.xpath("//table[contains(@class, 'infobox')][1]/tbody"):
             base_chunk = chunk.xpath("tr[1]/th/div[2]")
             if isinstance(base_chunk, list) and len(base_chunk) == 1:
                 base_chunk = base_chunk[0]
             else:
+                print(len(base_chunk))
                 raise Exception
 
             base_strength       = base_chunk.xpath("div[4]/b/text()").get()
@@ -141,7 +144,7 @@ class DotaSpider(scrapy.Spider):
 
         yield {
                 'hero':                response.meta['hero'],
-                'image':               response.meta['image'],
+                # 'image':               response.meta['image'],
                 'base_strength':       base_strength,
                 'strength_growth':     strength_growth,
                 'base_agility':        base_agility,
