@@ -1,5 +1,5 @@
 CREATE TABLE hero (
-    name STRING PRIMARY KEY,
+    hero STRING PRIMARY KEY,
     base_strength INTEGER,
     strength_growth FLOAT,
     base_agility INTEGER,
@@ -66,11 +66,11 @@ CREATE TABLE hero (
 
 
 --INSERT INTO hero (
---    name, 
---    base_strength, 
---    strength_growth, 
---    damage_low_1, 
---    damage_high_1, 
+--    hero,
+--    base_strength,
+--    strength_growth,
+--    damage_low_1,
+--    damage_high_1,
 --    movement_speed
 --    ) VALUES(
 --    "Abaddon",
@@ -82,11 +82,11 @@ CREATE TABLE hero (
 --);
 --
 --INSERT INTO hero (
---    name, 
---    base_strength, 
---    strength_growth, 
---    damage_low_1, 
---    damage_high_1, 
+--    hero,
+--    base_strength,
+--    strength_growth,
+--    damage_low_1,
+--    damage_high_1,
 --    movement_speed
 --    ) VALUES(
 --    "Alchemist",
@@ -98,11 +98,11 @@ CREATE TABLE hero (
 --);
 --
 --INSERT INTO hero (
---    name, 
---    base_strength, 
---    strength_growth, 
---    damage_low_1, 
---    damage_high_1, 
+--    hero,
+--    base_strength,
+--    strength_growth,
+--    damage_low_1,
+--    damage_high_1,
 --    movement_speed
 --    ) VALUES(
 --    "Axe",
