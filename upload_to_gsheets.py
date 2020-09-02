@@ -20,9 +20,16 @@ def main():
 
     spreadsheet = client.open('DotA 2 Hero Stats')
 
-    with open(args.csv, 'r') as file_obj:
-        content = file_obj.read()
-        client.import_csv(spreadsheet.id, data=content)
+    sh = spreadsheet.sheet1
+
+    # formatting cells
+    sh.format('A1:BK1', {'textFormat': {'bold': True}})
+
+    # temporarily commented out: upload overwrites formatting
+    # Upload part
+    #with open(args.csv, 'r') as file_obj:
+    #    content = file_obj.read()
+    #    client.import_csv(spreadsheet.id, data=content)
 
 
 if  __name__ == '__main__':
