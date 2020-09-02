@@ -28,3 +28,12 @@ To open an existing database (NOT sql file), run:
 ```
 sqlite> .open test.db
 ```
+
+From sqlite3 CLI opening to output data:
+```
+sqlite> .mode csv
+sqlite> .read setup.sql
+sqlite> .import heroes.csv hero
+sqlite> .schema hero
+sqlite> SELECT * FROM hero;
+```
