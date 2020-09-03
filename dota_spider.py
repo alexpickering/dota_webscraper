@@ -40,6 +40,9 @@ class DotaSpider(scrapy.Spider):
                 print(len(base_chunk))
                 raise Exception
 
+            primary_attribute   = response.xpath("//div[4]/div/p//a[contains(@title, 'Strength') or contains(@title, 'Agility') or contains(@title, 'Intelligence')]/text()").get()
+            print(primary_attribute)
+
             base_strength       = base_chunk.xpath("div[4]/b/text()").get()
             strength_growth     = base_chunk.xpath("div[4]/text()").get()[3:]
             base_agility        = base_chunk.xpath("div[5]/b/text()").get()
@@ -145,6 +148,7 @@ class DotaSpider(scrapy.Spider):
         yield {
                 'hero':                response.meta['hero'],
                 # 'image':               response.meta['image'],
+                'primary_attribute':   primary_attribute,
                 'base_strength':       base_strength,
                 'strength_growth':     strength_growth,
                 'base_agility':        base_agility,
