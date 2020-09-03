@@ -54,3 +54,10 @@ sqlite> .import heroes.csv hero
 sqlite> .schema hero
 sqlite> SELECT * FROM hero;
 ```
+
+
+
+Useful Tutorials
+----------------
+
+https://medium.com/craftsmenltd/from-csv-to-google-sheet-using-python-ef097cb014f9
