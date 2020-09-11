@@ -1,4 +1,5 @@
 import scrapy
+from scrapy.crawler import CrawlerProcess
 
 
 class DotaSpider(scrapy.Spider):
@@ -41,7 +42,6 @@ class DotaSpider(scrapy.Spider):
                 raise Exception
 
             primary_attribute   = response.xpath("//div[4]/div/p//a[contains(@title, 'Strength') or contains(@title, 'Agility') or contains(@title, 'Intelligence')]/text()").get()
-            print(primary_attribute)
 
             base_strength       = base_chunk.xpath("div[4]/b/text()").get()
             strength_growth     = base_chunk.xpath("div[4]/text()").get()[3:]
@@ -192,3 +192,13 @@ class DotaSpider(scrapy.Spider):
             flat[key] = value
 
         return flat
+
+
+process = CrawlerProcess(settings={
+    'FEEDS': {
+        'heroes.csv': {'format': 'csv'},
+        },
+})
+
+process.crawl(DotaSpider)
+process.start()

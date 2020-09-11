@@ -3,6 +3,7 @@ import argparse
 import csv
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from handle_stats import calc_lvl_stats
 
 
 scope = ["https://spreadsheets.google.com/feeds",
@@ -21,19 +22,18 @@ def main():
 
     spreadsheet = client.open('DotA 2 Hero Stats')
 
+
+    #calc_lvl_stats(args.csv)
+    #print(args.csv)
+
     # temporarily commented out: upload overwrites formatting
     # Upload part
     with open(args.csv, 'r') as file_obj:
-        edited_file_obj = edit_data(file_obj)
-        content = edited_file_obj.read()
+        content = file_obj.read()
         client.import_csv(spreadsheet.id, data=content)
 
 
     sh = spreadsheet.sheet1
-
-    # TODO(apick): 
-    # 1. cull headers
-    # 2. make lvl-dependent stats via formulas
 
     # B1:AE1 = lvl request cells
     # starts = [ (x * 119) + 3 for x in range(29) ]
@@ -47,11 +47,6 @@ def main():
     # formatting cells
     sh.format('A1:BQ1', {'textFormat': {'bold': True}})
     sh.sort((1, 'asc'), range='A2:BQ120')
-
-
-def edit_data(csvfile):
-    csvreader = csv.reader(csvfile)
-
 
 
 
