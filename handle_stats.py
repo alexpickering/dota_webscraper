@@ -1,5 +1,11 @@
 import pandas as pd
 
+def extract_hero_list(filename):
+    with open(filename, 'r') as file_obj:
+        df = pd.read_csv(file_obj)
+        return list(df.hero.values)
+
+
 def primary_attr_for_formulas(df):
     if (df['primary_attribute'] == 'strength'): 
         return df.strength
@@ -13,42 +19,42 @@ def primary_attr_for_formulas(df):
 def calc_lvl_stats(filename, lvl=15):
 
     with open(filename, 'r') as file_obj:
-        data = pd.read_csv(file_obj)
+        df = pd.read_csv(file_obj)
 
         # Changes to data happen
         df2 = pd.DataFrame({
-            data.columns[0]: data.hero.values,
-            'primary_attribute': data.primary_attribute.values,
+            df.columns[0]: df.hero.values,
+            'primary_attribute': df.primary_attribute.values,
 
-            'strength': data.base_strength.values + \
-                    (data.strength_growth.values * (lvl - 1)),
-            'agility': data.base_agility.values + \
-                    (data.agility_growth.values * (lvl - 1)),
-            'intelligence': data.base_intelligence.values + \
-                    (data.intelligence_growth.values * (lvl - 1))
+            'strength': df.base_strength.values + \
+                    (df.strength_growth.values * (lvl - 1)),
+            'agility': df.base_agility.values + \
+                    (df.agility_growth.values * (lvl - 1)),
+            'intelligence': df.base_intelligence.values + \
+                    (df.intelligence_growth.values * (lvl - 1))
             })
         df2['primary_attribute_count'] = df2.apply(primary_attr_for_formulas, axis=1)
         #print("after initial assignment: \n")
         #print(df2)
 
-        print(df2.agility.values)
-        print(df2['agility'].values)
+        #print(df2.agility.values)
+        #print(df2['agility'].values)
         #new_df['Agility'] = df2.agility.values
 
         df2 = df2.assign(**{
             'total_attributes': df2.strength.values + df2.agility.values + \
                     df2.intelligence.values,
             'health': 200 + (df2.strength.values * 20),
-            'health_regen': data.health_regen_0.values + \
+            'health_regen': df.health_regen_0.values + \
                     (0.1 * df2.strength.values),
-            'mana': data.mana_0.values + (12 * df2.intelligence.values),
-            'mana_regen': data.mana_regen_0 + (0.05 * df2.intelligence.values),
-            'armor': data.armor_0.values + ((1/6) * df2.agility.values),
-            'attacks_per_second': (data.attack_speed.values + df2.agility.values * \
-                    0.01) / data.base_attack_time.values,
-            'damage_low': data.damage_low_0.values + \
+            'mana': df.mana_0.values + (12 * df2.intelligence.values),
+            'mana_regen': df.mana_regen_0 + (0.05 * df2.intelligence.values),
+            'armor': df.armor_0.values + ((1/6) * df2.agility.values),
+            'attacks_per_second': (df.attack_speed.values + df2.agility.values * \
+                    0.01) / df.base_attack_time.values,
+            'damage_low': df.damage_low_0.values + \
                     df2.primary_attribute_count.values,
-            'damage_high': data.damage_high_0.values + \
+            'damage_high': df.damage_high_0.values + \
                     df2.primary_attribute_count.values
             })
 
@@ -72,23 +78,58 @@ def calc_lvl_stats(filename, lvl=15):
         
         #print("after round: \n")
         #print(df2)
-        df2.to_csv('out.csv')
+        #df2.to_csv('out.csv')
 
-        data.drop([
-            'health_0', 'health_15', 'health_25', 'health_30', 'health_regen_0',
-            'health_regen_15', 'health_regen_25', 'health_regen_30', 'mana_0',
-            'mana_15', 'mana_25', 'mana_30', 'mana_regen_0', 'mana_regen_15',
-            'mana_regen_25', 'mana_regen_30', 'armor_0', 'armor_15', 'armor_25',
-            'armor_30', 'attacks_per_second_0','attacks_per_second_15',
-            'attacks_per_second_25', 'attacks_per_second_30', 'damage_low_0',
-            'damage_low_15', 'damage_low_25', 'damage_low_30', 'damage_high_0',
-            'damage_high_15', 'damage_high_25', 'damage_high_30'
-        ], axis=1, inplace=True)
+        #df.drop([
+        #    'health_0', 'health_15', 'health_25', 'health_30', 'health_regen_0',
+        #    'health_regen_15', 'health_regen_25', 'health_regen_30', 'mana_0',
+        #    'mana_15', 'mana_25', 'mana_30', 'mana_regen_0', 'mana_regen_15',
+        #    'mana_regen_25', 'mana_regen_30', 'armor_0', 'armor_15', 'armor_25',
+        #    'armor_30', 'attacks_per_second_0','attacks_per_second_15',
+        #    'attacks_per_second_25', 'attacks_per_second_30', 'damage_low_0',
+        #    'damage_low_15', 'damage_low_25', 'damage_low_30', 'damage_high_0',
+        #    'damage_high_15', 'damage_high_25', 'damage_high_30'
+        #], axis=1, inplace=True)
 
-        #for hero in data:
-        #print(data)
-        #print(list(data.columns.values))
-        data.rename({
+        # df for sheet displaying all hero stats
+        out_df_all = df[[
+            'hero',
+            'primary_attribute',
+            'base_strength',
+            'strength_growth',
+            'base_agility',
+            'agility_growth',
+            'base_intelligence',
+            'intelligence_growth',
+            'health_1',
+            'health_regen_1',
+            'mana_1',
+            'mana_regen_1',
+            'armor_1',
+            'attacks_per_second_1',
+            'damage_low_1',
+            'damage_high_1',
+            'magic_resistance',
+            'movement_speed',
+            'attack_speed',
+            'turn_rate',
+            'vision_range_day',
+            'vision_range_night',
+            'attack_type',
+            'attack_range',
+            'projectile_speed',
+            'attack_animation_point',
+            'attack_animation_backswing',
+            'base_attack_time',
+            'damage_block',
+            'collision_size',
+            'legs',
+            'gib_type'
+            ]].copy()
+        print(out_df_all)
+        
+        #print(list(df.columns.values))
+        out_df_all.rename({
             'hero': 'Hero',
             'primary_attribute': 'Primary Attribute',
             'base_strength': 'Base Strength',
@@ -122,26 +163,39 @@ def calc_lvl_stats(filename, lvl=15):
             'legs': 'Legs',
             'gib_type': 'Gib Type'
             }, axis='columns', inplace=True)
-        #print(list(data.columns.values)) 
-        #print(data)
+        #print(list(df.columns.values)) 
+        #print(df)
 
+        print(list(out_df_all.columns.values))
+        print(out_df_all)
+
+        print(list(df2.columns.values))
+        # df for sheet displaying requested hero stats
+        print(out_df_req)
         
-        df2.to_csv('heroes_to_upload.csv')
+        #df2.to_csv(filename + '_to_upload.csv')
+        #out_df_all.to_csv(filename + '_to_upload_sheet1.csv')
+        #out_df_req.to_csv(filename + '_to_upload_sheet2.csv')
 
 
 def main():
+    # TODO - add argparse 
+
+    filename='heroes.csv'
+
     # BEGIN temporary section
-    with open('hero_request.txt') as f:
-        txt = f.read()
-        req_hero = txt.split('\n')[0]
-        print(req_hero)
-        req_level = int(txt.split('\n')[1][1].strip())
-        print(req_level)
-        #global req_lvl = req_levels[0]
-        #print(req_lvl)
+    #with open('hero_request.txt') as f:
+    #    txt = f.read()
+    #    req_hero = txt.split('\n')[0]
+    #    print(req_hero)
+    #    req_level = int(txt.split('\n')[1][1].strip())
+    #    print(req_level)
+    #    #global req_lvl = req_levels[0]
+    #    #print(req_lvl)
     # END
 
-    calc_lvl_stats('heroes.csv', req_level)
+    #extract_hero_list(filename)
+    calc_lvl_stats(filename)
 
 
 if __name__ == '__main__':
