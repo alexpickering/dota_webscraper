@@ -1,9 +1,11 @@
 from argparse import ArgumentParser
 from gooey import Gooey, GooeyParser
+from handle_stats import extract_hero_list
 import re
 
-#@Gooey
-def main():
+
+@Gooey
+def parse_input():
     parser = ArgumentParser()
     parser.add_argument('hero', action='extend', type=str,  nargs='+', metavar='Hero and Level')
     args = parser.parse_args()
@@ -29,8 +31,7 @@ def main():
     print("raw_list: ")
     print(raw_list)
 
-    # TODO(apick): update hero_list with webscraper info (pandas?)
-    hero_list = ['Abaddon', 'Alchemist', 'Axe', 'Lone Druid']
+    hero_list = extract_hero_list('heroes.csv')
     # num_list strings: [ '1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
     num_list = list(range(1,31))
     rough_list= []
@@ -69,21 +70,23 @@ def main():
                 i = i + 1
                 #print(val_list)
                 #print("first while " + str(i))
-            if len(val_list) == 1:
-                out_dict[hero_name] = val_list[0]
-            else:
-                out_dict[hero_name] = sorted(val_list.copy())
+            out_dict[hero_name] = sorted(val_list.copy())
             i = i + 1
             #print(out_dict)
             #print("second, after out_dict " + str(i))
         else:
             hero_name = deduped_list[i]
-            out_dict[hero_name] = 1
+            out_dict[hero_name] = [1]
             i = i + 1
             #print("third, in else " + str(i))
 
 
     print(out_dict)
+    return out_dict
+
+
+def main():
+    return parse_input()
 
 if __name__ == '__main__':
     main()
