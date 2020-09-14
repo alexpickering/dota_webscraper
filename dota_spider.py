@@ -194,11 +194,22 @@ class DotaSpider(scrapy.Spider):
         return flat
 
 
-process = CrawlerProcess(settings={
-    'FEEDS': {
-        'heroes.csv': {'format': 'csv'},
-        },
-})
 
-process.crawl(DotaSpider)
-process.start()
+def start_crawler(outfile='heroes.csv'):
+
+    process = CrawlerProcess(settings={
+        'FEEDS': {
+            outfile: {'format': 'csv'},
+            },
+    })
+
+    process.crawl(DotaSpider)
+    process.start()
+
+
+def main():
+    start_crawler()    
+    
+
+if __name__ == '__main__':
+    main()
