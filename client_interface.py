@@ -1,15 +1,19 @@
 from argparse import ArgumentParser
 from gooey import Gooey, GooeyParser
 from handle_stats import extract_hero_list
+import os
 import re
+import json
 
 
 @Gooey
 def parse_input():
     parser = ArgumentParser()
     parser.add_argument('hero', action='extend', type=str,  nargs='+', metavar='Hero and Level')
+    parser.add_argument('--all', action='store', default=1, type=str, metavar='Level for All-Heroes Display')
     args = parser.parse_args()
     heroes = args.hero
+    all_lvl = args.all
     print("parser output: ")
     print(heroes)
     raw_list = []
@@ -26,7 +30,7 @@ def parse_input():
         else:
             raw_list.append(elt)
 
-    raw_list = list(filter(None, raw_list))    
+    raw_list = list(filter(None, raw_list))
 
     print("raw_list: ")
     print(raw_list)
@@ -80,6 +84,9 @@ def parse_input():
             i = i + 1
             #print("third, in else " + str(i))
 
+    # saving dictionary as file
+    with open('out_dict.json','w+') as f:
+        json.dump(out_dict,f)
 
     print(out_dict)
     return out_dict
