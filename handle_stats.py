@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import pandas as pd
 
 def extract_hero_list(filename):
@@ -203,7 +204,7 @@ def calc_lvl_stats(filename, request_dict):
 
         print(list(df2.columns.values))
         # df for sheet displaying requested hero stats
-        print(out_df_req)
+        #print(out_df_req)
         
         #df2.to_csv(filename + '_to_upload.csv')
         #out_df_all.to_csv(filename + '_to_upload_sheet1.csv')
