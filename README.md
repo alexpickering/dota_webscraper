@@ -62,3 +62,4 @@ Useful Tutorials
 
 https://medium.com/craftsmenltd/from-csv-to-google-sheet-using-python-ef097cb014f9
 https://pbpython.com/improve-pandas-excel-output.html
+https://stackoverflow.com/questions/10715965/add-one-row-to-pandas-dataframe/17496530#17496530
