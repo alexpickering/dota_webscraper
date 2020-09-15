@@ -16,16 +16,59 @@ def primary_attr_for_formulas(df):
     else:
         raise exception
 
-def calc_lvl_stats(filename, lvl=15):
+def format_base_stats(filename):
+    with open(filename, 'r') as file_obj:
+        df = pd.read_csv(file_obj)
+        df_base = pd.DataFrame()
+
+        # Assigns columns and data to output dataframe for base stats
+        df_base['Hero'] = df.hero
+        df_base['Primary Attribute'] = df.primary_attribute
+        df_base['Strength'] = df.base_strength
+        df_base['Strength Growth'] = df.strength_growth
+        df_base['Agility'] = df.base_agility
+        df_base['Agility Growth'] = df.agility_growth
+        df_base['Intelligence'] = df.base_intelligence
+        df_base['Intelligence Growth'] = df.intelligence_growth
+        df_base['Health'] = df.health_1
+        df_base['Health Regen'] = df.health_regen_1
+        df_base['Mana'] = df.mana_1
+        df_base['Mana Regen'] = df.mana_regen_1
+        df_base['Armor'] = df.armor_1
+        df_base['Attacks/Second'] = df.attacks_per_second_1
+        df_base['Damage Low'] = df.damage_low_1
+        df_base['Damage High'] = df.damage_high_1
+        df_base['Magic Resistance'] = df.magic_resistance
+        df_base['Movement Speed'] = df.movement_speed
+        df_base['Attack Speed'] = df.attack_speed
+        df_base['Turn Rate'] = df.turn_rate
+        df_base['Vision Range Day'] = df.vision_range_day
+        df_base['Vision Range Night'] = df.vision_range_night
+        df_base['Attack Type'] = df.attack_type
+        df_base['Attack Range'] = df.attack_range
+        df_base['Projectile Speed'] = df.projectile_speed
+        df_base['Attack Animation Point'] = df.attack_animation_point
+        df_base['Attack Animation Backswing'] = df.attack_animation_backswing
+        df_base['Base Attack Time'] = df.base_attack_time
+        df_base['Damage Block'] = df.damage_block
+        df_base['Collision Size'] = df.collision_size
+        df_base['Legs'] = df.legs
+        df_base['Gib Type'] = df.gib_type
+
+        print(df_base)
+        df_base.to_csv(filename + '_base',index=False)
+
+
+def calc_lvl_stats(filename, request_dict):
 
     with open(filename, 'r') as file_obj:
         df = pd.read_csv(file_obj)
 
         # Changes to data happen
         df2 = pd.DataFrame({
-            df.columns[0]: df.hero.values,
+            #df.columns[0]: df.hero.values,
+            'Hero': df.hero.values,
             'primary_attribute': df.primary_attribute.values,
-
             'strength': df.base_strength.values + \
                     (df.strength_growth.values * (lvl - 1)),
             'agility': df.base_agility.values + \
@@ -79,17 +122,6 @@ def calc_lvl_stats(filename, lvl=15):
         #print("after round: \n")
         #print(df2)
         #df2.to_csv('out.csv')
-
-        #df.drop([
-        #    'health_0', 'health_15', 'health_25', 'health_30', 'health_regen_0',
-        #    'health_regen_15', 'health_regen_25', 'health_regen_30', 'mana_0',
-        #    'mana_15', 'mana_25', 'mana_30', 'mana_regen_0', 'mana_regen_15',
-        #    'mana_regen_25', 'mana_regen_30', 'armor_0', 'armor_15', 'armor_25',
-        #    'armor_30', 'attacks_per_second_0','attacks_per_second_15',
-        #    'attacks_per_second_25', 'attacks_per_second_30', 'damage_low_0',
-        #    'damage_low_15', 'damage_low_25', 'damage_low_30', 'damage_high_0',
-        #    'damage_high_15', 'damage_high_25', 'damage_high_30'
-        #], axis=1, inplace=True)
 
         # df for sheet displaying all hero stats
         out_df_all = df[[
@@ -182,6 +214,7 @@ def main():
     # TODO - add argparse 
 
     filename='heroes.csv'
+    request_dict = {'Abaddon': [1,10,11,12,30], 'Lone Druid': [1], 'Axe': [10,11,12]}
 
     # BEGIN temporary section
     #with open('hero_request.txt') as f:
@@ -195,7 +228,8 @@ def main():
     # END
 
     #extract_hero_list(filename)
-    calc_lvl_stats(filename)
+    calc_lvl_stats(filename, request_dict)
+    #format_base_stats(filename)
 
 
 if __name__ == '__main__':
