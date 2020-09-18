@@ -4,16 +4,10 @@ from handle_stats import extract_hero_list
 import os
 import re
 import json
+import sys
 
 
-@Gooey
-def parse_input():
-    parser = ArgumentParser()
-    parser.add_argument('hero', action='extend', type=str,  nargs='+', metavar='Hero and Level')
-    parser.add_argument('--all', action='store', default=1, type=str, metavar='Level for All-Heroes Display')
-    args = parser.parse_args()
-    heroes = args.hero
-    all_lvl = args.all
+def format_request(heroes, all_lvl):
     print("parser output: ")
     print(heroes)
     raw_list = []
@@ -84,16 +78,42 @@ def parse_input():
             i = i + 1
             #print("third, in else " + str(i))
 
+    out_dict['All Heroes'] = all_lvl
+
     # saving dictionary as file
-    with open('out_dict.json','w+') as f:
-        json.dump(out_dict,f)
+    #with open('out_dict.json','w+') as f:
+    #    json.dump(out_dict,f)
 
     print(out_dict)
     return out_dict
 
 
+@Gooey
+def set_gooey():
+    pass
+
+
 def main():
-    return parse_input()
+    if len(sys.argv) == 1:
+        set_gooey()
+
+    parser = ArgumentParser()
+    parser.add_argument('hero', action='extend', type=str,  nargs='+', help='Hero and Level')
+    parser.add_argument('--all', action='store', default=1, type=str, help='Level for All-Heroes Display')
+    #parser.add_argument('hero', choices=HERO_LIST)
+    args = parser.parse_args()
+    heroes = args.hero
+    all_lvl = args.all
+
+    print(len(sys.argv))
+    print(sys.argv)
+
+    req = format_request(heroes, all_lvl)
+
+    with open('request.json', 'w') as f:
+        json.dump(req, f)
+
+    #return req
 
 if __name__ == '__main__':
     main()
