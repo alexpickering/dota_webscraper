@@ -1,12 +1,12 @@
 from argparse import ArgumentParser
 from gooey import Gooey, GooeyParser
-from handle_stats import extract_hero_list
 import os
 import re
 import json
 import sys
 
 
+# TODO: clean up and pare down format_request
 def format_request(heroes, all_lvl):
     print("parser output: ")
     print(heroes)
@@ -29,8 +29,10 @@ def format_request(heroes, all_lvl):
     print("raw_list: ")
     print(raw_list)
 
-    hero_list = extract_hero_list('heroes.csv')
-    # num_list strings: [ '1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
+    # import hardcoded hero_list
+    hero_list = []
+    with open('hero_list.txt', 'r') as f:
+        hero_list = [line.rstrip('\n') for line in f]
     num_list = list(range(1,31))
     rough_list= []
 
