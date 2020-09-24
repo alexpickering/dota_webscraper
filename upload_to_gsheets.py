@@ -3,7 +3,6 @@ import argparse
 import csv
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from handle_stats import calc_lvl_stats
 
 
 scope = ["https://spreadsheets.google.com/feeds",
@@ -12,42 +11,44 @@ scope = ["https://spreadsheets.google.com/feeds",
         "https://www.googleapis.com/auth/drive"]
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("csv", type=str, help="The input csv file")
-    args = parser.parse_args()
-
+def upload_csv(filenames):
     credentials = ServiceAccountCredentials.from_json_keyfile_name('.dota-scraper-creds.json', scope)
     client = gspread.authorize(credentials)
 
-    spreadsheet = client.open('DotA 2 Hero Stats')
-
-
-    #calc_lvl_stats(args.csv)
-    #print(args.csv)
-
-    # temporarily commented out: upload overwrites formatting
-    # Upload part
-    with open(args.csv, 'r') as file_obj:
-        content = file_obj.read()
-        client.import_csv(spreadsheet.id, data=content)
-
-
-    sh = spreadsheet.sheet1
-
-    # B1:AE1 = lvl request cells
-    # starts = [ (x * 119) + 3 for x in range(29) ]
-    # ends   = [ (x * 119) + 121 for x in range(29) ]
-    # per_lvl_blocks = [str(x) + ':' + str(y) for x, y in zip(starts, ends)]
     
+    
+    if type(filenames) == str:
+        filenames = [filenames]
+
+    # Upload
+    i = 0
+    for filename in filenames:
+        spreadsheet = client.open('DotA 2 Hero Stats')
+        worksheet = spreadsheet.get_worksheet(i)
+        if worksheet == None:
+            worksheet = spreadsheet.add_worksheet(title='sheet'+str(i+1), rows=130, cols=30,index=i)
+        else:
+            worksheet.clear()
+        with open(filename, 'r') as file_obj:
+            reader = csv.reader(file_obj)
+            spreadsheet.values_update(
+                    worksheet.title,
+                    params={'valueInputOption': 'USER_ENTERED'},
+                    body={'values': list(reader)}
+            )
+        i = i+1
+
+        # formatting cells
+        #spreadsheet.format('A1:BQ1', {'textFormat': {'bold': True}})
+        #spreadsheet.sort((1, 'asc'), range='A2:BQ120')
 
 
-
-
-    # formatting cells
-    sh.format('A1:BQ1', {'textFormat': {'bold': True}})
-    sh.sort((1, 'asc'), range='A2:BQ120')
-
+def main():
+    # TODO: accept multiple csv files as arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("csv", type=str, help="The input csv file")
+    args = parser.parse_args()
+    upload_csv(args.csv)
 
 
 if  __name__ == '__main__':
