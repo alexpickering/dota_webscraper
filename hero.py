@@ -3,11 +3,38 @@ import copy
 class Hero(object):
     ROUND = {
             'strength': 1,
-            'intelligence': 1
+            'agility': 1,
+            'intelligence': 1,
+            'attribute_total': 1,
+            'health': 0,
+            'health_regen': 1,
+            'mana': 0,
+            'mana_regen': 1,
+            'armor': 2,
+            'attacks_per_second': 2,
+            'damage_low': 0,
+            'damage_high': 0
             }
 
-    DEFAULT_DICT_KEYS = {
-            }
+    DEFAULT_OUTPUT_FIELDS = [
+            'name',
+            'primary',
+            'strength',
+            'agility',
+            'intelligence',
+            'attribute_total',
+            'health',
+            'health_regen',
+            'mana',
+            'mana_regen',
+            'armor',
+            'attacks_per_second',
+            'damage_low',
+            'damage_high'
+            ]
+
+    OTHER_THING_FIELDS = ['name']
+
 
 
     def __init__(self, *args, **kwargs):
@@ -38,19 +65,6 @@ class Hero(object):
         self.damage_high_base  = float(kwargs['damage_high_0'])
 
         self.level = 1
-
-   #     self.primary_count = self.get_primary_count
-
-   # def get_primary_count(self):
-   #     primary = self.primary
-   #     if primary=='strength':
-   #         return self.strength
-   #     elif primary=='agility':
-   #         return self.agility
-   #     elif primary=='intelligence':
-   #         return self.intelligence
-   #     else:
-   #         raise Exception
 
 
     @property
@@ -106,15 +120,27 @@ class Hero(object):
         return getattr(self, self.primary)
 
 
+    def to_dict(self, fields=None, title_case=False, rounded=False):
+        ret = {}
 
-    def to_dict(self, title_case=False, rounded=False):
-        ret = copy.deepcopy(self.__dict__)
+        if not fields:
+            fields = self.__class__.DEFAULT_OUTPUT_FIELDS
 
-        # Get a list of the property names ['strength', 'agility', 'intelligence']
-        property_names=[p for p in dir(__class__) if isinstance(getattr(__class__,p),property)]
-        # For each property, get its value using getattr() -- put that in our dict
-        for p in property_names:
-            ret[p] = getattr(self,p)
+        for key in fields:
+            try:
+                ret[key] = copy.deepcopy(self.__dict__[key])
+            except KeyError as e:
+                ret[key] = getattr(self,key)
+            except KeyError as e:
+                print(f"Couldn't find key {key} in object")
+
+        # This is how we would get all properties, if we wanted to
+        ## Get a list of the property names ['strength', 'agility', 'intelligence']
+        #property_names=[p for p in dir(__class__) if isinstance(getattr(__class__,p),property)]
+
+        ## For each property, get its value using getattr() -- put that in our dict
+        #for p in set(property_names) & set(fields):
+        #    ret[p] = getattr(self,p)
 
         if rounded:
             keys_to_round = set(self.__class__.ROUND.keys()) & set(ret.keys())
