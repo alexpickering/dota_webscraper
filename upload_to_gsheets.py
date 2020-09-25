@@ -44,9 +44,8 @@ def upload_csv(filenames):
 
 
 def main():
-    # TODO: accept multiple csv files as arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("csv", type=str, help="The input csv file")
+    parser.add_argument("csv", type=str, nargs='+', help="The input csv file")
     args = parser.parse_args()
     upload_csv(args.csv)
 
