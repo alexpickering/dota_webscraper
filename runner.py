@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from dota_spider import start_crawler as crawl 
-from handle_stats import calc_requests
+from gsheets_handle_stats import calc_requests
 from upload_to_gsheets import upload_csv
 import json
 import subprocess

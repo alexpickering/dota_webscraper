@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import scrapy
 from scrapy.crawler import CrawlerProcess
+import os
 
 
 class DotaSpider(scrapy.Spider):
@@ -197,6 +198,9 @@ class DotaSpider(scrapy.Spider):
 
 
 def start_crawler(outfile='heroes.csv'):
+
+    # removes old 'heroes.csv' file
+    os.remove(outfile)
 
     process = CrawlerProcess(settings={
         'FEEDS': {

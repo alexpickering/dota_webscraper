@@ -17,6 +17,7 @@ def using_csv(filename):
 
 
 def get_request_dict(filename):
+    request_dict = {}
     with open(filename, 'r') as f:
         request_dict = json.loads(f.read())
     return request_dict
