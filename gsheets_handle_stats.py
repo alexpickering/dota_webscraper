@@ -174,8 +174,8 @@ def calc_requested_heroes(datafile_name, request_dict,outfile_name):
                         'Damage High': damage_high
                 })
 
-            rows.append(dict1)
-            new_index = str(int(new_index)+1)
+                rows.append(dict1)
+                new_index = str(int(new_index)+1)
 
     outdf = pd.DataFrame(rows)
     outdf.to_csv(outfile_name,index=False)

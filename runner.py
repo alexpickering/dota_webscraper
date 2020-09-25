@@ -23,7 +23,7 @@ def main():
     with open('request.json', 'r') as f:
         request_dict = json.loads(f.read())
 
-    # handle_stats.py
+    # gsheets_handle_stats.py
     filenames = calc_requests(filename, request_dict)
     
     # upload_to_gsheets.py
