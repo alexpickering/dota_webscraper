@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""Uploads Hero stats csv file(s) to Google Sheets "DotA 2 Hero Stats" spreadsheet."""
+
 import argparse
 import csv
+
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -15,8 +20,8 @@ def upload_csv(filenames):
     credentials = ServiceAccountCredentials.from_json_keyfile_name('.dota-scraper-creds.json', scope)
     client = gspread.authorize(credentials)
 
-    
-    
+
+
     if type(filenames) == str:
         filenames = [filenames]
 

@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""Webscraper pulls Hero stats from gamepedia."""
+
+import os
+
 import scrapy
 from scrapy.crawler import CrawlerProcess
-import os
 
 
 class DotaSpider(scrapy.Spider):
@@ -64,42 +69,42 @@ class DotaSpider(scrapy.Spider):
                         15: lvl_chunk.xpath("tr[2]/td[3]/text()").get().strip(),
                         25: lvl_chunk.xpath("tr[2]/td[4]/text()").get().strip(),
                         30: lvl_chunk.xpath("tr[2]/td[5]/text()").get().strip()
-                    } 
-            health_regen = { 
+                    }
+            health_regen = {
                         0 : lvl_chunk.xpath("tr[3]/td[1]/text()").get().strip(),
                         1 : lvl_chunk.xpath("tr[3]/td[2]/text()").get().strip(),
                         15: lvl_chunk.xpath("tr[3]/td[3]/text()").get().strip(),
                         25: lvl_chunk.xpath("tr[3]/td[4]/text()").get().strip(),
                         30: lvl_chunk.xpath("tr[3]/td[5]/text()").get().strip()
-                    } 
+                    }
             mana = {
                         0 : lvl_chunk.xpath("tr[4]/td[1]/text()").get().strip(),
                         1 : lvl_chunk.xpath("tr[4]/td[2]/text()").get().strip(),
                         15: lvl_chunk.xpath("tr[4]/td[3]/text()").get().strip(),
                         25: lvl_chunk.xpath("tr[4]/td[4]/text()").get().strip(),
                         30: lvl_chunk.xpath("tr[4]/td[5]/text()").get().strip()
-                    } 
+                    }
             mana_regen = {
                         0 : lvl_chunk.xpath("tr[5]/td[1]/text()").get().strip(),
                         1 : lvl_chunk.xpath("tr[5]/td[2]/text()").get().strip(),
                         15: lvl_chunk.xpath("tr[5]/td[3]/text()").get().strip(),
                         25: lvl_chunk.xpath("tr[5]/td[4]/text()").get().strip(),
                         30: lvl_chunk.xpath("tr[5]/td[5]/text()").get().strip()
-                    } 
+                    }
             armor = {
                         0 : lvl_chunk.xpath("tr[6]/td[1]/text()").get().strip(),
                         1 : lvl_chunk.xpath("tr[6]/td[2]/text()").get().strip(),
                         15: lvl_chunk.xpath("tr[6]/td[3]/text()").get().strip(),
                         25: lvl_chunk.xpath("tr[6]/td[4]/text()").get().strip(),
                         30: lvl_chunk.xpath("tr[6]/td[5]/text()").get().strip()
-                    } 
+                    }
             attacks_per_second = {
                         0 : lvl_chunk.xpath("tr[7]/td[1]/text()").get().strip(),
                         1 : lvl_chunk.xpath("tr[7]/td[2]/text()").get().strip(),
                         15: lvl_chunk.xpath("tr[7]/td[3]/text()").get().strip(),
                         25: lvl_chunk.xpath("tr[7]/td[4]/text()").get().strip(),
                         30: lvl_chunk.xpath("tr[7]/td[5]/text()").get().strip()
-                    } 
+                    }
             damage_low = {
                         0 : lvl_chunk.xpath("tr[8]/td[1]/text()").get().strip().split('‒')[0],
                         1 : lvl_chunk.xpath("tr[8]/td[2]/text()").get().strip().split('‒')[0],
@@ -113,7 +118,7 @@ class DotaSpider(scrapy.Spider):
                         15: lvl_chunk.xpath("tr[8]/td[3]/text()").get().strip().split('‒')[1],
                         25: lvl_chunk.xpath("tr[8]/td[4]/text()").get().strip().split('‒')[1],
                         30: lvl_chunk.xpath("tr[8]/td[5]/text()").get().strip().split('‒')[1]
-                    } 
+                    }
 
             other_stats_chunk = chunk.xpath("tr[3]/td/table/tbody")
             if isinstance(other_stats_chunk, list) and len(other_stats_chunk) == 1:
@@ -213,8 +218,8 @@ def start_crawler(outfile='heroes.csv'):
 
 
 def main():
-    start_crawler()    
-    
+    start_crawler()
+
 
 if __name__ == '__main__':
     main()

@@ -1,20 +1,28 @@
 #!/usr/bin/env python3
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from dota_spider import start_crawler as crawl 
-from gsheets_handle_stats import calc_requests
-from upload_to_gsheets import upload_csv
+"""Runs package from beginning to end."""
+
 import json
 import subprocess
 import sys
 
+from dota_spider import start_crawler as crawl
+from gsheets_handle_stats import calc_requests
+from upload_to_gsheets import upload_csv
+
+
 def main():
-    
+    """
+    Uses webcrawler to collect hero information, prompts user for requests, sets up
+    csv files with embedded gsheets formulas, and exports csv files to gsheets.
+    """
+
     filename = 'heroes.csv'
 
     # dota_spider.py
     crawl(filename)
-    
+
     # client_interface.py
     #out = subprocess.check_output([sys.executable, './client_interface.py'])
     subprocess.check_output([sys.executable, './client_interface.py'])
@@ -25,7 +33,7 @@ def main():
 
     # gsheets_handle_stats.py
     filenames = calc_requests(filename, request_dict)
-    
+
     # upload_to_gsheets.py
     upload_csv(filenames)
 

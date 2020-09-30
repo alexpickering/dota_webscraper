@@ -1,5 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""Using requests and webcrawler data, creates csv with embedded Gsheets formulas that will calculate dynamically on Gsheets."""
+
 import csv
 import json
+
 import pandas as pd
 
 
@@ -44,7 +50,7 @@ def calc_all_heroes(datafile_name, all_lvl, outfile_name):
             base_attack_time = str(df.at[i,'base_attack_time'])
             base_damage_low = str(df.at[i,'damage_low_0'])
             base_damage_high = str(df.at[i,'damage_high_0'])
-            
+
             # cell reference in A1 (ex. $D3)
             primary_cell = ''.join([headers[primary.title()],new_index])
             strength_cell = ''.join([headers['Strength'],new_index])
@@ -93,7 +99,7 @@ def calc_all_heroes(datafile_name, all_lvl, outfile_name):
 
     with open(outfile_name, 'r') as file_obj:
         finaldf = pd.read_csv(file_obj,header=None)
-        
+
         end_headers = ['Level:', all_lvl,] + [''] * 12
         finaldf.columns = end_headers
         finaldf.to_csv(outfile_name,index=False)
@@ -133,7 +139,7 @@ def calc_requested_heroes(datafile_name, request_dict,outfile_name):
                 base_attack_time = str(df.at[i,'base_attack_time'])
                 base_damage_low = str(df.at[i,'damage_low_0'])
                 base_damage_high = str(df.at[i,'damage_high_0'])
-                
+
                 # cell reference in A1 (ex. $D3)
                 primary_cell = ''.join([headers[primary.title()],new_index])
                 strength_cell = ''.join([headers['Strength'],new_index])

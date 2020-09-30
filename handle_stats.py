@@ -1,6 +1,12 @@
-import csv
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""Uses request dictionary and webcrawler information to calculate hero stats at requested levels."""
+
 import copy
+import csv
 import json
+
 from hero import Hero
 
 
@@ -31,7 +37,7 @@ def calc_requested_heroes(hero_objs, request_dict):
             hero_objs[hero].level = lvl
             hero_objs[hero].name = hero + '_' + str(lvl)
             outdict[hero + '_' + str(lvl)] = hero_objs[hero].to_dict(title_case=True, rounded=True)
-            
+
     return outdict
 
 
@@ -50,7 +56,7 @@ def values_to_instances(data):
     for hero in data.keys():
         hero_objs[hero] = Hero(**data[hero])
     return hero_objs
-    
+
 
 def write_to_csv(outdict, filename):
     with open(filename, 'w') as csvfile:
@@ -64,7 +70,7 @@ def write_to_csv(outdict, filename):
 def calc_requests(filename, request_dict):
     data = using_csv(filename)
     hero_objs = values_to_instances(data)
- 
+
     all_lvl = request_dict.pop('All Heroes', 1)
 
     filename_all = 'heroes_to_upload_all.csv'
@@ -85,7 +91,7 @@ def main():
 
     data = using_csv(test_filename)
     hero_objs = values_to_instances(data)
- 
+
     #request_dict = get_request_dict(request_dict_filename)
     request_dict = test_request_dict
     all_lvl = request_dict.pop('All Heroes', 1)
