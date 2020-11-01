@@ -16,3 +16,7 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.7
+
+      - name: Pip install
+        working-directory: ${{ env.working-dir }}
+        run: pip install ${{ env.working-dir }}
