@@ -1,4 +1,4 @@
-__pycache__
+__pycache__/
 *.swp
 *.swo
 *.pyc
@@ -6,3 +6,7 @@ __pycache__
 *.db
 *.csv
 .dota-scraper-creds.json
+
+# PyInstaller
+*.manifest
+*.spec

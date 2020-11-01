@@ -14,6 +14,9 @@ class DotaSpider(scrapy.Spider):
     start_urls = [
             'https://dota2.gamepedia.com/heroes',
             ]
+    custom_settings = {
+            'LOG_STDOUT': 'True'
+    }
 
     def parse(self, response):
         #count = 0
@@ -205,7 +208,8 @@ class DotaSpider(scrapy.Spider):
 def start_crawler(outfile='heroes.csv'):
 
     # removes old 'heroes.csv' file
-    os.remove(outfile)
+    if os.path.isfile(outfile):
+        os.remove(outfile)
 
     process = CrawlerProcess(settings={
         'FEEDS': {

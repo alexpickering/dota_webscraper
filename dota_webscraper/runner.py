@@ -4,6 +4,7 @@
 """Runs package from beginning to end."""
 
 import json
+import os
 import subprocess
 import sys
 
@@ -32,10 +33,16 @@ def main():
         request_dict = json.loads(f.read())
 
     # gsheets_handle_stats.py
-    filenames = calc_requests(filename, request_dict)
+    calc_filenames = calc_requests(filename, request_dict)
 
     # upload_to_gsheets.py
-    upload_csv(filenames)
+    upload_csv(calc_filenames)
+
+    # removes all process files
+    os.remove(filename)
+    os.remove('request.json')
+    for name in calc_filenames:
+        os.remove(name)
 
 
 if __name__ == '__main__':
