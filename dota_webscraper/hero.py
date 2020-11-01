@@ -130,9 +130,10 @@ class Hero(object):
             try:
                 ret[key] = copy.deepcopy(self.__dict__[key])
             except KeyError as e:
-                ret[key] = getattr(self,key)
-            except KeyError as e:
-                print(f"Couldn't find key {key} in object")
+                try:
+                    ret[key] = getattr(self, key)
+                except KeyError as e:
+                    print(f"Couldn't find key {key} in object")
 
         # This is how we would get all properties, if we wanted to
         ## Get a list of the property names ['strength', 'agility', 'intelligence']
