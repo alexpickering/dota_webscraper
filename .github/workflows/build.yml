@@ -23,4 +23,6 @@ jobs:
 
       - name: Pip install
         working-directory: ${{ env.working-dir }}
-        run: pip install ${{ env.working-dir }}
+        run: |
+          pip install git-python
+          pip install ${{ env.working-dir }}
