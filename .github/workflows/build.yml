@@ -30,6 +30,11 @@ jobs:
         run: |
           pip install git-python
 
+      - name: Pip install wheel
+        working-directory: ${{ env.working-dir }}
+        run: |
+          pip install wheel
+
           #- name: Pip install wxpython
           #  working-directory: ${{ env.working-dir }}
           #  run: |
