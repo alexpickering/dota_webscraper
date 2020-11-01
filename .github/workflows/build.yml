@@ -14,7 +14,7 @@ jobs:
       working-dir: "."
     strategy:
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.7]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
