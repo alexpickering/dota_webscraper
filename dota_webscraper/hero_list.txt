@@ -117,3 +117,4 @@ Lycan
 Beastmaster
 Axe
 Alchemist
+Hoodwink
