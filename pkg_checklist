@@ -1,0 +1,23 @@
+Pkg Checklist:
+[ ]dota_webscraper/
+   │
+[ ]├── dota_webscraper/
+[ ]│   ├── __init__.py
+[ ]│   ├── runner.py
+[ ]│   ├── dota_spider.py
+[ ]│   ├── client_interface.py
+[ ]│   ├── gsheets_handle_stats.py
+[ ]│   ├── upload_to_gsheets.py
+[ ]│   ├── hero_list.txt
+[ ]│   ├── hero.py
+[ ]│   └── handle_stats.py
+   │
+[ ]├── tests/
+[ ]│   ├── helloworld_tests.py
+[ ]│   └── helpers_tests.py
+   │
+[x]├── .gitignore
+[x]├── LICENSE
+[ ]├── README.md
+[x]├── requirements.txt
+[ ]└── setup.py

@@ -1,0 +1,122 @@
+Action Map:
+
+Dota2 Gamepedia
+              \
+               \
+                v
+        dota_spider.py
+                |
+                | heroes.csv
+                |                client_interface.py
+                |              /
+                |             /  request.json
+                | -----------
+                v
+        handle_stats.py
+                |
+                | heroes_to_upload_all.csv
+                | 
+                | heroes_to_upload_req.csv
+                v
+        upload_to_gsheets.py
+               /
+              /
+             /
+            v    
+DotA2 Hero Stats
+
+
+TODOs:
+[ ] Client_interface.py
+    [ ] b. map 'enter' keyevent to submit
+[ ] Package
+    [ ] Pyinstaller for .py->exe
+
+Complete:
+[ ] Client_interface.py
+    [x] clean up and pare down format_request()
+    [x] 6. Fix client_interface.py parsing
+        [x] a. 'a 23' should only return one hero, the closest alphabetical match, or first match
+    [x] hardcode hero list, save in separate file, import
+[x] runner.py
+    [x] hardcode hero list, put client_interface first
+    [x] test handle_stats.py through EOF
+[x] Handle_stats.py
+    [x] export hero list to csv for hardcoded list
+[x] upload_to_gsheets.py
+    [x] accept multiple csv files as arguments
+    [x] upload both files as separate sheets
+[x] gsheets_handle_stats.py
+    [x] Fix: multiple lvl entries in calc_req overwrite each other
+
+
+[x] 9. Create formula-based gsheets entries
+- 8. rendered obsolete by Hero class implementation
+    [x] 8. All numeric values become stringtype when loaded into df from csv
+        [x] - int() typecast each field when needed (slow?)
+        [x] - df.astype().dtypes to change all values to int (headers,hero cells, prim_attr problematic) 
+[x] 7. Handle all_lvl request with request_dict (or not?)
+    [x] - alternatively: pass values through func call to runner.py
+
+[x] 4. handle_stats.py: filter df (using copy()) instead of drop()
+    ... whitelisting instead of blacklisting for clarity and sustainability
+
+[x] 3. get GUI interface working
+    [x] a. accept input via gooey
+    [x] b. parse input into separate hero chunks
+    [x] c. deal with dashes
+
+[x] 2. Figure out stats for each hero given a certain lvl
+   [x]  a. prompt user for input
+   [x]  b. calculate fields for each character based on input
+   [x]  c. output csv based on that input
+
+[x] 1. Add field "Total Attributes"
+    STR + AGI + INT at any given level
+
+
+Problems:
+[x] 1. handle_stats.py can't update 'all heroes at lvl x' lvl # without input
+    - could run it for every lvl, store results
+        * base_stats comes from lvl_1, not stored separately
+        * lvl_stats_all is selecting the 119 heroes at desired lvl
+        * lvl_stats_requested pulls pre-calculated data from bank
+    - could add lvl counter into Gooey
+
+    base_stats(trivially easy) vs. lvl_stats_all(easy if not dynamic, hard else)
+        vs. lvl_stats_requested(...)
+
+
+
+
+
+
+
+NOTE: store all base stats at char_lvl = 1
+
+Required fields:
+- hero (static)
+- str
+- agi
+- int
+- total_attr
+- health
+- health_regen
+- mana
+- mana_regen
+- armor
+- atk_per_sec
+- dam_low
+- dam_high
+
+----lvl-independent:
+- magic_resistance
+- mvmt_speed
+- atk_speed
+- turn_rate
+- vision_range_day
+- vision_range_night
+- atk_type
+- atk_range
+- proj_speed
+- atk_anim_point

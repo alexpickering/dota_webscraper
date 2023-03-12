@@ -1,0 +1,60 @@
+Formulas for lvl-dependent stats:
+
+- str
+    str = base_str + (str_growth * (lvl - 1))
+
+- agi
+    agi = base_agi + (agi_growth * (lvl - 1))
+
+- int
+    int = base_int + (int_growth * (lvl - 1))
+
+- prim_attr
+    prim_attr = 0
+    prim_attr_growth = 0
+    if (primary_attribute == 'strength')
+    {
+        prim_attr = str
+        prim_attr_growth = str_growth
+    }
+    elif (primary_attribute == 'agility')
+    {
+        prim_attr = agi
+        prim_attr_growth = agi_growth
+    }
+    elif (primary_attribute == 'intelligence')
+    {
+        prim_attr = int
+        prim_attr_growth = int_growth
+    }
+    else
+    {
+        raise exception
+    }
+
+- total_attr
+    total_attr = str + agi + int
+
+- health
+    health = round(200 + (str * 20), 2)
+
+- health_regen
+    health_regen = round(base_health_regen + (0.1 * str_growth * (lvl - 1)), 2) 
+
+- mana
+    mana = round(base_mana + (12 * int_growth * (lvl - 1)) , 2)    
+
+- mana_regen
+    mana_regen = round(base_mana_regen + (0.05 * int_growth * (lvl - 1)), 2)
+
+- armor
+    armor = round(base_armor + ((1/6) * agi_growth * (lvl - 1)), 2)
+
+- atk_per_sec
+   attack_per_second = ((attack_speed + agi * 0.01) / base_attack_time
+
+- dam_low
+    dam_low = round(base_dam_low + prim_attr, 2)
+
+- dam_high
+    dam_high = round(base_dam_high + prim_attr, 2)
